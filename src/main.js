@@ -131,14 +131,33 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   });
 });
 
-// ===== SUBTLE PARALLAX ON HERO =====
-const hero = document.querySelector('.hero');
-const heroContent = document.querySelector('.hero-content');
+// ===== MOUSE-FOLLOW GLOW ON HERO =====
+const heroEl = document.querySelector('.hero');
+const heroGlow = document.getElementById('heroGlow');
 
-window.addEventListener('scroll', () => {
-  if (window.scrollY < window.innerHeight) {
-    const ratio = window.scrollY / window.innerHeight;
-    heroContent.style.transform = `translateY(${ratio * 40}px)`;
-    heroContent.style.opacity = 1 - ratio * 0.6;
-  }
-}, { passive: true });
+if (heroEl && heroGlow) {
+  heroEl.addEventListener('mousemove', (e) => {
+    const rect = heroEl.getBoundingClientRect();
+    heroGlow.style.left = `${e.clientX - rect.left}px`;
+    heroGlow.style.top = `${e.clientY - rect.top}px`;
+  });
+}
+
+// ===== PARALLAX ON IMMERSIVE SECTIONS =====
+const immersiveSections = document.querySelectorAll('.services, .zones');
+
+if (immersiveSections.length) {
+  window.addEventListener('scroll', () => {
+    immersiveSections.forEach((section) => {
+      const rect = section.getBoundingClientRect();
+      const windowH = window.innerHeight;
+
+      if (rect.bottom > 0 && rect.top < windowH) {
+        const progress = (windowH - rect.top) / (windowH + rect.height);
+        const offset = (progress - 0.5) * 60;
+        section.style.backgroundPosition = `center calc(50% + ${offset}px)`;
+      }
+    });
+  }, { passive: true });
+}
+
