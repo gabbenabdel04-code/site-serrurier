@@ -757,6 +757,10 @@ button {
   gap: 24px;
 }
 
+.zones-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
 .zone-card {
   background: rgba(255, 255, 255, 0.07);
   backdrop-filter: blur(16px);
