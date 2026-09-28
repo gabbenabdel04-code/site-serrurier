@@ -57,7 +57,10 @@ const revealObserver = new IntersectionObserver(
 reveals.forEach((el) => revealObserver.observe(el));
 
 // ===== COUNTER ANIMATION =====
-let countersAnimated = false;
+// La vraie valeur est déjà écrite dans le HTML (lisible sans JS et par Google).
+// L'animation n'est qu'un bonus : désactivée si l'utilisateur limite les animations.
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+let countersAnimated = reduceMotion;
 
 const counterObserver = new IntersectionObserver(
   (entries) => {
@@ -76,6 +79,7 @@ statNumbers.forEach((el) => counterObserver.observe(el));
 function animateCounters() {
   statNumbers.forEach((el) => {
     const target = parseInt(el.dataset.count, 10);
+    if (Number.isNaN(target)) return;
     const duration = 2000;
     const start = performance.now();
 

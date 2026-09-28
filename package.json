@@ -1,7 +1,7 @@
 {
   "name": "serrurier-site",
   "version": "1.0.0",
-  "description": "Site vitrine serrurier - Pau, Orthez, Biarritz",
+  "description": "Site vitrine serrurier - Navarrenx et Béarn",
   "type": "module",
   "scripts": {
     "dev": "vite",
